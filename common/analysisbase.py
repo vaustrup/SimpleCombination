@@ -71,13 +71,16 @@ class AnalysisBase(ABC):
 
         Do not override.
         """
+        self._logger.info(f"Modify workspace for analysis {self.name}.")
         workspace.rename_measurement()
         workspace.rename_poi()
         if combination is not None:
+            self._logger.info(f"Apply settings for combination {combination.name}.")
             if combination.channels is not None: workspace.prune_regions(combination.channels[self.name].keys())
             workspace.set_measurement_parameters(combination.measurement_parameters)
             workspace.mark_regions()
             workspace.mark_modifiers()
+        
         return workspace
 
     def workspace(self, combination: Optional[CombinationBase]=None) -> pyhf.Workspace:

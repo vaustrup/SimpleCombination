@@ -8,6 +8,8 @@ class CombinationBase(ABC):
     Default settings are provided by CombinationBase, which can be overridden in child classes.
     """
 
+    name: str
+
     @property
     def outputdir(self):
         """
@@ -45,7 +47,7 @@ class CombinationBase(ABC):
             'parameter1': {'setting1': 'foo'}
             'parameter2': {'setting1': 'bar'}
         }
-        
+
         These modifications are applied to all individual analysis workspaces.
         """
         return {}

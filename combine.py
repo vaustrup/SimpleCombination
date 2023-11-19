@@ -2,6 +2,7 @@ import argparse
 import importlib
 import inspect
 import logging
+import sys
 
 import cabinetry
 import pyhf
@@ -37,7 +38,8 @@ def get_combination(combination_name: Optional[str]) -> Optional[CombinationBase
     if not inspect.isclass(getattr(combination_module, "Combination")):
         raise AttributeError(f"Module combinations.{combination_name} does not have contain a class called 'Combination'.")
     # now we can finally create an instance of the Combination class
-    combination = combination_module.Combination()
+    combination = combination_module.Combination(combination_name)
+    logger.info(f"Loaded configuration for combination {combination_name}.")
     return combination
 
 def get_analysis_workspace(analysis_name: str, parameters: Dict, combination: Optional[CombinationBase]) -> AnalysisBase:
@@ -62,7 +64,7 @@ def get_analysis_workspace(analysis_name: str, parameters: Dict, combination: Op
         raise AttributeError(f"Module analysis.{analysis_name} does not have contain a class called 'Analysis'.")
     # now we can finally create an instance of the Analysis class
     analysis = analysis_module.Analysis(analysis_name, parameters)
-
+    logger.info(f"Loaded configuration for analysis {analysis_name}.")
     return analysis.workspace(combination)
 
 def main():
@@ -85,12 +87,20 @@ def main():
     parser.add_argument("-c", "--combination",
                         dest="combination_name",
                         help="Name of combination to perform.")
-    parser.add_argument("--poi-name",
-                        default="SigXsecOverSM",
-                        dest="poi_name",
-                        help="Name of POI to use in combination (default: 'SigXsecOverSM').")
+    parser.add_argument("--output-level",
+                        dest="output_level",
+                        type=int,
+                        default=20,
+                        help="Output level for printing logging messages. 10: DEBUG, 20: INFO, 30: WARNING, 40: ERROR, 50: CRITICAL (default: 20)."
+                        )
     
     args = parser.parse_args()
+
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter("%(asctime)s [%(levelname)4s]: %(message)s", "%d.%m.%Y %H:%M:%S")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    logger.setLevel(args.output_level)
 
     parameters = common.utils.parse_parameters(args.parameters)
 
@@ -99,7 +109,8 @@ def main():
 
     combined_ws = CombinedWorkspace(workspaces=workspaces)
     fit_results = combined_ws.fit_results()
-    print(fit_results)
+    for label, bestfit, uncertainty in zip(fit_results.labels, fit_results.bestfit, fit_results.uncertainty):
+        logger.debug(f"{label}: {bestfit} +/- {uncertainty}")
     
 if __name__ == "__main__":
     main()
