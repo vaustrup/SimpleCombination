@@ -30,7 +30,7 @@ class Workspace():
             if modifier == self.ws.get_measurement()["config"]["poi"]:
                 continue # do not rename POI
             modifiers[modifier] = modifier + "_" + self.name.replace(" ", "")
-        self.ws = self.ws.rename(modifiers=modifiers)
+        self.rename_modifiers(names=modifiers)
 
     def prune_regions(self, regions_to_keep: List[str]) -> None:
         """

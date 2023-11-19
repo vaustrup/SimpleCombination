@@ -8,6 +8,7 @@ import pyhf
 
 from common.analysisbase import AnalysisBase
 from common.combinationbase import CombinationBase
+from common.combinedworkspace import CombinedWorkspace
 
 import common.utils
 
@@ -94,24 +95,10 @@ def main():
     parameters = common.utils.parse_parameters(args.parameters)
 
     combination = get_combination(args.combination_name)
+    workspaces = [get_analysis_workspace(analysis_name=analysis_name, parameters=parameters, combination=combination) for analysis_name in args.analysis_names]
 
-    workspaces = {}
-    for analysis_name in args.analysis_names:
-        workspaces[analysis_name] = get_analysis_workspace(analysis_name=analysis_name, parameters=parameters, combination=combination)
-
-    ws = workspaces[args.analysis_names[0]]
-    for i_ws in range(1, len(workspaces)):
-        ws = pyhf.Workspace.combine(ws, workspaces[args.analysis_names[i_ws]], join="outer", merge_channels=True)
-
-    measurement = ws.get_measurement()
-    model_spec = {
-        'channels': ws["channels"],
-        'parameters': measurement['config']['parameters']
-    }
-    model = pyhf.pdf.Model(model_spec, poi_name=args.poi_name)
-    data = ws.data(model, include_auxdata=True)
-
-    fit_results = cabinetry.fit.fit(model, data)
+    combined_ws = CombinedWorkspace(workspaces=workspaces)
+    fit_results = combined_ws.fit_results()
     print(fit_results)
     
 if __name__ == "__main__":
