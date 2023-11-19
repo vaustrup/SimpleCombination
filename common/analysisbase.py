@@ -76,6 +76,8 @@ class AnalysisBase(ABC):
         if combination is not None:
             if combination.channels is not None: workspace.prune_regions(combination.channels[self.name].keys())
             workspace.set_measurement_parameters(combination.measurement_parameters)
+            workspace.mark_regions()
+            workspace.mark_modifiers()
         return workspace
 
     def workspace(self, combination: Optional[CombinationBase]=None) -> pyhf.Workspace:
@@ -97,7 +99,7 @@ class AnalysisBase(ABC):
             except json.decoder.JSONDecodeError:
                 raise ValueError(f"Input file {filename} for analysis {self.name} is not valid JSON.")
         
-        workspace = Workspace(pyhf.Workspace(spec))
+        workspace = Workspace(name=self.name, ws=pyhf.Workspace(spec))
         workspace = self._modify_workspace(workspace, combination)
         return workspace.ws
         

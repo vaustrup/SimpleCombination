@@ -9,8 +9,28 @@ class Workspace():
     Class providing helper methods to modify pyhf.Workspaces.
     """
 
-    def __init__(self, ws: pyhf.Workspace):
+    def __init__(self, name: str, ws: pyhf.Workspace):
+        self.name = name
         self.ws: pyhf.Workspace = ws
+
+    def mark_regions(self) -> None:
+        """
+        Ensure names of regions are unique by appending the name of the individual analysis.
+        """
+        self.ws = self.ws.rename(channels={channel: f"{channel}_{self.name}" for channel in self.ws.model().config.channels})
+
+    def mark_modifiers(self) -> None:
+        """
+        Ensure names of modifiers are unique by appending the name of the individual analysis.
+        """
+        modifiers = {}
+        for modifier in self.ws.model().config.parameters:
+            if modifier == "lumi":
+                continue # renaming the lumi modifier breaks assumptions of pyhf
+            if modifier == self.ws.get_measurement()["config"]["poi"]:
+                continue # do not rename POI
+            modifiers[modifier] = modifier + "_" + self.name.replace(" ", "")
+        self.ws = self.ws.rename(modifiers=modifiers)
 
     def prune_regions(self, regions_to_keep: List[str]) -> None:
         """
