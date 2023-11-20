@@ -1,3 +1,5 @@
+import re
+
 import pyhf
 
 import common.utils
@@ -31,6 +33,32 @@ class Workspace():
                 continue # do not rename POI
             modifiers[modifier] = modifier + "_" + self.name.replace(" ", "")
         self.rename_modifiers(names=modifiers)
+
+    def prune_modifiers(self, modifiers_to_prune: Dict[str, List[str]]) -> None:
+        """
+        Remove modifiers from workspace for certain samples.
+
+        Arguments:
+            modifiers_to_prune (Dict[str, List[str]]): dictionary with sample name as key and list of modifiers to prune as value
+        """
+        for i_channel, channel in enumerate(self.ws["channels"]):
+            for i_sample, sample in enumerate(channel["samples"]):
+                for prune_sample, prune_tags in modifiers_to_prune.items():
+                    if not re.match(prune_sample, sample["name"]): continue
+                    
+                    # position of modifier to prune is appended to list
+                    prune_modifiers: List[int] = []
+                    for i_modifier, modifier in enumerate(sample["modifiers"]):
+                        # skip if already added to list when it matches multiple pruning tags
+                        if i_modifier in prune_modifiers: continue
+
+                        for prune_tag in prune_tags:
+                            if not re.match(prune_tag, modifier["name"]): continue
+                            prune_modifiers.append(i_modifier)
+
+                    # delete in reverse to avoid problems with indeces
+                    for i in sorted(prune_modifiers, reverse=True):
+                        del self.ws["channels"][i_channel]["samples"][i_sample]["modifiers"][i]
 
     def prune_regions(self, regions_to_keep: List[str]) -> None:
         """
@@ -68,6 +96,15 @@ class Workspace():
         old_poi = self.ws["measurements"][0]["config"]["poi"]
         self.ws["measurements"][0]["config"]["poi"] = poi_name
         self.rename_modifiers({ old_poi: poi_name } )
+
+    def rename_samples(self, names: Dict[str, str]) -> None:
+        """
+        Rename sample names.
+
+        Arguments:
+            names (Dict[str, str]): dictionary with old sample names as key and new samples names as value
+        """
+        self.ws = self.ws.rename(samples=names)
 
     def set_measurement_parameters(self, parameters: dict) -> None:
         """

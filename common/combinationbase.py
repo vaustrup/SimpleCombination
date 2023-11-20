@@ -10,15 +10,16 @@ class CombinationBase(ABC):
 
     name: str
 
-    @property
-    def outputdir(self):
-        """
-        Name of the output directory, in which to save all results, can be specified in the child class with
-
-        outputdir = '/path/to/output/directory'
-        """
-        return None
     
+    # Name of the output directory, in which to save all results, can be specified in the child class with
+    # outputdir = '/path/to/output/directory'
+    outputdir: Optional[str] = None
+
+    # Name of signal process to use in combined workspaces
+    # Signal processes in individual workspaces will be renamed to this
+    signalname: str = "signal"
+
+    # unfortunately we cannot use channels = {...} so have to make to with the getter here and override it with a dict in the child class
     @property
     def channels(self):
         """
@@ -38,6 +39,7 @@ class CombinationBase(ABC):
         """
         return None
     
+    # unfortunately we cannot use measurement_parameters = {...} so have to make to with the getter here and override it with a dict in the child class
     @property
     def measurement_parameters(self):
         """

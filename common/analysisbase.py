@@ -9,7 +9,7 @@ from common.combinationbase import CombinationBase
 
 import logging
 
-from typing import Dict, Optional
+from typing import Dict, List, Optional
 
 @dataclass
 class AnalysisBase(ABC):
@@ -20,6 +20,9 @@ class AnalysisBase(ABC):
     name: str
     parameters: Dict[str, str]
     _logger = logging.getLogger("SimpleCombination")
+
+    # supports regex matching for sample names and for modifier names
+    modifiers_to_prune: Dict[str, List[str]] = {}
 
     @property
     def samples_to_rename(self) -> Dict[str, str]:
@@ -59,7 +62,7 @@ class AnalysisBase(ABC):
         """
         raise NotImplementedError("Function returning name of signal process has not been defined. Add 'def signalname(self):' to the analysis {self.name}.")
 
-    def _modify_workspace(self, workspace: Workspace, combination: Optional[CombinationBase]=None) -> Workspace:
+    def _modify_workspace(self, workspace: Workspace, parameters: Dict, combination: Optional[CombinationBase]=None) -> Workspace:
         """
         Modify workspace according to setting in analysis and combination configuration classes.
 
@@ -74,16 +77,21 @@ class AnalysisBase(ABC):
         self._logger.info(f"Modify workspace for analysis {self.name}.")
         workspace.rename_measurement()
         workspace.rename_poi()
+        workspace.prune_modifiers(self.modifiers_to_prune)
+        
         if combination is not None:
             self._logger.info(f"Apply settings for combination {combination.name}.")
             if combination.channels is not None: workspace.prune_regions(combination.channels[self.name].keys())
             workspace.set_measurement_parameters(combination.measurement_parameters)
-            workspace.mark_regions()
-            workspace.mark_modifiers()
+            # rename signal process to common name for combined workspaces
+            workspace.rename_samples( {self.signalname(parameters): combination.signalname} )
+        
+        workspace.mark_regions()
+        workspace.mark_modifiers()
         
         return workspace
 
-    def workspace(self, combination: Optional[CombinationBase]=None) -> pyhf.Workspace:
+    def workspace(self, parameters: Dict, combination: Optional[CombinationBase]=None) -> pyhf.Workspace:
         """
         Read pyhf.Workspace from input file and modify it according to settings in analysis and combination configuration classes.
 
@@ -103,6 +111,6 @@ class AnalysisBase(ABC):
                 raise ValueError(f"Input file {filename} for analysis {self.name} is not valid JSON.")
         
         workspace = Workspace(name=self.name, ws=pyhf.Workspace(spec))
-        workspace = self._modify_workspace(workspace, combination)
+        workspace = self._modify_workspace(workspace, parameters, combination)
         return workspace.ws
         

@@ -65,7 +65,7 @@ def get_analysis_workspace(analysis_name: str, parameters: Dict, combination: Op
     # now we can finally create an instance of the Analysis class
     analysis = analysis_module.Analysis(analysis_name, parameters)
     logger.info(f"Loaded configuration for analysis {analysis_name}.")
-    return analysis.workspace(combination)
+    return analysis.workspace(parameters, combination)
 
 def main():
     """
