@@ -10,6 +10,7 @@ import pyhf
 from common.analysisbase import AnalysisBase
 from common.combinationbase import CombinationBase
 from common.combinedworkspace import CombinedWorkspace
+import common.plotting
 
 import common.utils
 
@@ -111,6 +112,8 @@ def main():
     fit_results = combined_ws.fit_results()
     for label, bestfit, uncertainty in zip(fit_results.labels, fit_results.bestfit, fit_results.uncertainty):
         logger.debug(f"{label}: {bestfit} +/- {uncertainty}")
+    cabinetry.visualize.pulls(fit_results=fit_results)
+    common.plotting.norm_factors(fit_results=fit_results)
     
 if __name__ == "__main__":
     main()
