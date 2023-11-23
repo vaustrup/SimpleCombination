@@ -21,8 +21,20 @@ class AnalysisBase(ABC):
     parameters: Dict[str, str]
     _logger = logging.getLogger("SimpleCombination")
 
-    # supports regex matching for sample names and for modifier names
-    modifiers_to_prune: Dict[str, List[str]] = {}
+    
+    @property
+    def modifiers_to_prune(self) -> Dict[str, List[str]]:
+        """
+        A dictionary with sample name as key and list of modifier names to prune for given sample as value
+
+        modifiers_to_prune = {
+            'foo': ['bar', 'quu*'],
+            'baz': ['qux'],
+        }
+        
+        supports regex matching for sample names and for modifier names
+        """
+        return {}
 
     @property
     def samples_to_rename(self) -> Dict[str, str]:
@@ -84,7 +96,7 @@ class AnalysisBase(ABC):
             if combination.channels is not None: workspace.prune_regions(combination.channels[self.name].keys())
             workspace.set_measurement_parameters(combination.measurement_parameters)
             # rename signal process to common name for combined workspaces
-            workspace.rename_samples( {self.signalname(parameters): combination.signalname} )
+            workspace.rename_samples( {self.signalname(): combination.signalname} )
         
         workspace.mark_regions()
         workspace.mark_modifiers()
