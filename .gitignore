@@ -1,2 +1,5 @@
 venv
 *.json
+*.pdf
+analyses/*.py
+combinations/*.py
