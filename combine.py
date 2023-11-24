@@ -6,7 +6,6 @@ import logging
 import sys
 
 import cabinetry
-import pyhf
 
 from common.analysisbase import AnalysisBase
 from common.combinationbase import CombinationBase
@@ -104,6 +103,10 @@ def main():
                         action='store_true',
                         help="Set flag to obtain ranking plot."
                         )
+    parser.add_argument("--fit-comparisons",
+                        dest="fit_comparisons",
+                        action='store_true',
+                        help="Set flag to run fits for individual analyses and compare with combined results.")
     
     args = parser.parse_args()
 
@@ -118,10 +121,15 @@ def main():
     combination = get_combination(args.combination_name)
     workspaces = [get_analysis_workspace(analysis_name=analysis_name, parameters=parameters, combination=combination) for analysis_name in args.analysis_names]
 
-    combined_ws = CombinedWorkspace(workspaces=workspaces)
-    fit_results = combined_ws.fit_results()
-    for label, bestfit, uncertainty in zip(fit_results.labels, fit_results.bestfit, fit_results.uncertainty):
+    combined_ws = CombinedWorkspace(name="Combined", workspaces=workspaces)
+    combined_fit_results = combined_ws.fit_results()
+    for label, bestfit, uncertainty in zip(combined_fit_results.labels, combined_fit_results.bestfit, combined_fit_results.uncertainty):
         logger.debug(f"{label}: {bestfit} +/- {uncertainty}")
+
+    fit_results = [combined_fit_results]
+    if args.fit_comparisons:
+        for workspace in workspaces:
+            fit_results.append(workspace.fit_results())
 
     output_folder = pathlib.Path(args.output_dir)
     if not output_folder.exists():
@@ -132,15 +140,16 @@ def main():
     if not figure_folder.exists():
         figure_folder.mkdir()
     logger.debug("Creating pull plot.")
-    cabinetry.visualize.pulls(fit_results=fit_results, figure_folder=figure_folder)
+    cabinetry.visualize.pulls(fit_results=combined_fit_results, figure_folder=figure_folder)
     logger.debug("Creating correlation matrix.")
-    cabinetry.visualize.correlation_matrix(fit_results=fit_results, figure_folder=figure_folder, pruning_threshold=0.1)
+    cabinetry.visualize.correlation_matrix(fit_results=combined_fit_results, figure_folder=figure_folder, pruning_threshold=0.1)
     logger.debug("Creating normalisation factor plot.")
-    common.plotting.norm_factors(fit_results=fit_results, figure_folder=figure_folder)
+    model_names = [combined_ws.name]
+    model_names.extend([analysis_name for analysis_name in args.analysis_names])
+    common.plotting.norm_factors(fit_results=fit_results, figure_folder=figure_folder, model_names=model_names)
 
     logger.debug("Evaluating exclusion limits.")
     limit_results = combined_ws.limit_results()
-    print(limit_results)
     
     if args.ranking:
         logger.debug("Creating ranking plot.")

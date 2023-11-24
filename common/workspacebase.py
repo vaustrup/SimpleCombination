@@ -7,7 +7,8 @@ import cabinetry
 logger = logging.getLogger("SimpleCombination")
 
 class WorkspaceBase:
-    def __init__(self, ws: pyhf.Workspace):
+    def __init__(self, name: str, ws: pyhf.Workspace):
+        self.name = name
         self.ws = ws
 
     @property
@@ -31,12 +32,14 @@ class WorkspaceBase:
 
     @functools.lru_cache
     def fit_results(self):
-        logger.info("Starting fit on combined workspace.")
+        logging.debug(f"Starting fit for workspace {self.name}.")
         return cabinetry.fit.fit(self._model, self._data)
 
     def ranking_results(self):
+        logging.debug(f"Starting ranking for workspace {self.name}.")
         return cabinetry.fit.ranking(model=self._model, data=self._data, fit_results=self.fit_results())
     
     def limit_results(self):
+        logging.debug(f"Starting limit setting for workspace {self.name}.")
         return cabinetry.fit.limit(model=self._model, data=self._data)
     

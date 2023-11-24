@@ -5,31 +5,57 @@ import pathlib
 
 import cabinetry
 
-from typing import Union
+from typing import List, Union
 
-def norm_factors(fit_results: cabinetry.fit.FitResults, figure_folder: Union[str, pathlib.Path] = "") -> None:
-    exclude_set = set( [label for label, t in zip(fit_results.labels, fit_results.types) if t != "normfactor"] )
-    mask = [label not in exclude_set for label in fit_results.labels]
+def norm_factors(fit_results: List[cabinetry.fit.FitResults], figure_folder: Union[str, pathlib.Path] = "", model_names: List[str] = None) -> None:
+    
+    factors = []
+    for fit_result in fit_results:
+        f = {}
+        exclude_set = set( [label for label, t in zip(fit_result.labels, fit_result.types) if t != "normfactor"] )
+        mask = [label not in exclude_set for label in fit_result.labels]
 
-    bestfit = fit_results.bestfit[mask]
-    uncertainty = fit_results.uncertainty[mask]
-    labels = np.asarray(fit_results.labels)[mask]
+        bestfit = fit_result.bestfit[mask]
+        uncertainty = fit_result.uncertainty[mask]
+        labels = np.asarray(fit_result.labels)[mask]
 
-    num_pars = len(labels)
-    y_positions = np.arange(num_pars)
+        for l, b, u in zip(labels, bestfit, uncertainty):
+            f[l] = {"bestfit": b, "uncertainty": u}
+        factors.append(f)
+    all_labels = sorted(set([l for f in factors for l in f]))
+
+    step_size = 1.0
+    num_pars = len(all_labels)
+    y_positions = np.arange(num_pars, step=step_size)
 
     fig, ax = plt.subplots(figsize=(6, 1+num_pars/4), dpi=100)
 
-    ax.errorbar(bestfit, y_positions, xerr=uncertainty, fmt="o")
+    colors = ["black", "red", "blue", "green"]
+    label_offset = step_size/4.
+    max_norm = -999999
+    min_norm = 999999
+    for i_f, f in enumerate(factors):
+        bestfit = [f[label]["bestfit"] if label in f else np.nan for label in all_labels]
+        uncertainty = [f[label]["uncertainty"] if label in f else np.nan for label in all_labels]
 
-    ax.vlines(1, -0.5, num_pars-0.5, linestyles="dotted", color="black")
+        tmp_max = max([b+u for b, u in zip(bestfit, uncertainty)]+[max_norm])
+        max_norm = max(max_norm, tmp_max)
+        tmp_min = min([b-u for b, u in zip(bestfit, uncertainty)])
+        min_norm = min(min_norm, tmp_min)
 
-    ax.set_xlim([0,3])
-    ax.set_ylim([-0.5, num_pars-0.5])
+        ypos = y_positions if len(factors)==1 else [y+label_offset/2.*(len(factors)-1)-i_f*label_offset for y in y_positions]
+        ax.errorbar(bestfit, ypos, xerr=uncertainty, fmt=".", color=colors[i_f % len(colors)], label=model_names[i_f] if model_names is not None else None)
+
+    ax.vlines(1, -step_size/2., num_pars-step_size/2., linestyles="dotted", color="black")
+
+    ax.set_xlim([min_norm - 0.15 * (max_norm-min_norm),max_norm + 0.75*(max_norm-min_norm)])
+    ax.set_ylim([-step_size/2., num_pars-step_size/2.])
     ax.set_yticks(y_positions)
-    ax.set_yticklabels(labels)
+    ax.set_yticklabels(all_labels)
     ax.xaxis.set_minor_locator(ticker.AutoMinorLocator())
     ax.tick_params(axis="both", which="major", pad=8)
+    ax.tick_params(direction="in", top=True, right=True, which="both")
+    plt.legend(loc="upper right", frameon=False)
 
     fig.tight_layout()
     fig.savefig(f"{figure_folder}/normfactors.pdf")

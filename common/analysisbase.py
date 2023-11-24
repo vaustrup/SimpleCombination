@@ -103,14 +103,14 @@ class AnalysisBase(ABC):
         
         return workspace
 
-    def workspace(self, parameters: Dict, combination: Optional[CombinationBase]=None) -> pyhf.Workspace:
+    def workspace(self, parameters: Dict, combination: Optional[CombinationBase]=None) -> Workspace:
         """
         Read pyhf.Workspace from input file and modify it according to settings in analysis and combination configuration classes.
 
         Arguments:
             combination (Optional[CombinationBase]): Instance of given combination configuration class inheriting from CombinationBase (default: None)
 
-        Returns pyhf.Workspace object after applying modifications
+        Returns Workspace object after applying modifications
 
         Do not override.
         """
@@ -124,5 +124,5 @@ class AnalysisBase(ABC):
         
         workspace = Workspace(name=self.name, ws=pyhf.Workspace(spec))
         workspace = self._modify_workspace(workspace, parameters, combination)
-        return workspace.ws
+        return workspace
         
