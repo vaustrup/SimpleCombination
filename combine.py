@@ -1,6 +1,7 @@
 import argparse
 import importlib
 import inspect
+import pathlib
 import logging
 import sys
 
@@ -88,11 +89,20 @@ def main():
     parser.add_argument("-c", "--combination",
                         dest="combination_name",
                         help="Name of combination to perform.")
+    parser.add_argument("-o", "--output-dir",
+                        dest="output_dir",
+                        default="output",
+                        help="Directory to store output in.")
     parser.add_argument("--output-level",
                         dest="output_level",
                         type=int,
                         default=20,
                         help="Output level for printing logging messages. 10: DEBUG, 20: INFO, 30: WARNING, 40: ERROR, 50: CRITICAL (default: 20)."
+                        )
+    parser.add_argument("--ranking",
+                        dest="ranking",
+                        action='store_true',
+                        help="Set flag to obtain ranking plot."
                         )
     
     args = parser.parse_args()
@@ -112,8 +122,29 @@ def main():
     fit_results = combined_ws.fit_results()
     for label, bestfit, uncertainty in zip(fit_results.labels, fit_results.bestfit, fit_results.uncertainty):
         logger.debug(f"{label}: {bestfit} +/- {uncertainty}")
-    cabinetry.visualize.pulls(fit_results=fit_results)
-    common.plotting.norm_factors(fit_results=fit_results)
+
+    output_folder = pathlib.Path(args.output_dir)
+    if not output_folder.exists():
+        output_folder.mkdir(parents=True)
+    elif not output_folder.is_dir():
+        raise ValueError("Provided path {args.output_dir} is not a folder. Cannot create directory.")
+    figure_folder = output_folder / "figures"
+    if not figure_folder.exists():
+        figure_folder.mkdir()
+    logger.debug("Creating pull plot.")
+    cabinetry.visualize.pulls(fit_results=fit_results, figure_folder=figure_folder)
+    logger.debug("Creating correlation matrix.")
+    cabinetry.visualize.correlation_matrix(fit_results=fit_results, figure_folder=figure_folder, pruning_threshold=0.1)
+    logger.debug("Creating normalisation factor plot.")
+    common.plotting.norm_factors(fit_results=fit_results, figure_folder=figure_folder)
+
+    logger.debug("Evaluating exclusion limits.")
+    limit_results = combined_ws.limit_results()
+    print(limit_results)
+    
+    if args.ranking:
+        logger.debug("Creating ranking plot.")
+        cabinetry.visualize.ranking(ranking_results=combined_ws.ranking_results(), figure_folder=figure_folder)
     
 if __name__ == "__main__":
     main()

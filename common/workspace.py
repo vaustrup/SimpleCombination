@@ -2,11 +2,12 @@ import re
 
 import pyhf
 
+from common.workspacebase import WorkspaceBase
 import common.utils
 
 from typing import Dict, List
 
-class Workspace():
+class Workspace(WorkspaceBase):
     """
     Class providing helper methods to modify pyhf.Workspaces.
     """

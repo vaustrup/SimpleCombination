@@ -1,10 +1,13 @@
 from matplotlib import ticker
 import matplotlib.pyplot as plt
 import numpy as np
+import pathlib
 
 import cabinetry
 
-def norm_factors(fit_results: cabinetry.fit.FitResults, figure_folder: str = "") -> None:
+from typing import Union
+
+def norm_factors(fit_results: cabinetry.fit.FitResults, figure_folder: Union[str, pathlib.Path] = "") -> None:
     exclude_set = set( [label for label, t in zip(fit_results.labels, fit_results.types) if t != "normfactor"] )
     mask = [label not in exclude_set for label in fit_results.labels]
 
@@ -17,7 +20,6 @@ def norm_factors(fit_results: cabinetry.fit.FitResults, figure_folder: str = "")
 
     fig, ax = plt.subplots(figsize=(6, 1+num_pars/4), dpi=100)
 
-    print(bestfit, uncertainty)
     ax.errorbar(bestfit, y_positions, xerr=uncertainty, fmt="o")
 
     ax.vlines(1, -0.5, num_pars-0.5, linestyles="dotted", color="black")
