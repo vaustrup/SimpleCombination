@@ -4,7 +4,9 @@ import logging
 import pyhf
 import cabinetry
 
-logger = logging.getLogger("SimpleCombination")
+import common.limits
+
+logger = logging.getLogger(__name__)
 
 class WorkspaceBase:
     def __init__(self, name: str, ws: pyhf.Workspace):
@@ -37,9 +39,10 @@ class WorkspaceBase:
 
     def ranking_results(self):
         logging.debug(f"Starting ranking for workspace {self.name}.")
-        return cabinetry.fit.ranking(model=self._model, data=self._data, fit_results=self.fit_results())
+        return cabinetry.fit.ranking(model=self._model, data=self._data, fit_results=self.fit_results()) 
     
     def limit_results(self):
         logging.debug(f"Starting limit setting for workspace {self.name}.")
-        return cabinetry.fit.limit(model=self._model, data=self._data)
+        #return cabinetry.fit.limit(model=self._model, data=self._data)
+        return common.limits.limit_customScan(self._model, self._data)
     

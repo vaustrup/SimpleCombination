@@ -19,7 +19,7 @@ class AnalysisBase(ABC):
     """
     name: str
     parameters: Dict[str, str]
-    _logger = logging.getLogger("SimpleCombination")
+    _logger = logging.getLogger(__name__)
 
     
     @property
@@ -32,7 +32,8 @@ class AnalysisBase(ABC):
             'baz': ['qux'],
         }
         
-        supports regex matching for sample names and for modifier names
+        supports regex matching for sample names and for modifier names.
+        This will prune modifiers matching 'bar' or 'quu*' in samples matching 'foo' and modifiers matching 'qux' in samples matching 'baz'.
         """
         return {}
 
@@ -45,6 +46,8 @@ class AnalysisBase(ABC):
             'foo': 'bar',
             'baz': 'qux',
         }
+
+        This will rename the sample 'foo' into 'bar' and the sample 'baz' into 'qux'.
         """
         return {}
     
@@ -57,6 +60,8 @@ class AnalysisBase(ABC):
             'foo': 'bar',
             'baz': 'qux',
         }
+
+        This will rename the modifier 'foo' into 'bar' and the modifier 'baz' into 'qux'.
         """
         return {}
 

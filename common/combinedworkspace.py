@@ -7,7 +7,7 @@ from common.workspace import Workspace
 
 from typing import List
 
-logger = logging.getLogger("SimpleCombination")
+logger = logging.getLogger(__name__)
 
 class CombinedWorkspace(WorkspaceBase):
 
