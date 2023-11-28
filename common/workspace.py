@@ -7,6 +7,7 @@ import common.utils
 
 from typing import Dict, List
 
+
 class Workspace(WorkspaceBase):
     """
     Class providing helper methods to modify pyhf.Workspaces.
@@ -18,20 +19,28 @@ class Workspace(WorkspaceBase):
 
     def mark_regions(self) -> None:
         """
-        Ensure names of regions are unique by appending the name of the individual analysis.
+        Ensure names of regions are unique
+        by appending the name of the individual analysis.
         """
-        self.ws = self.ws.rename(channels={channel: f"{channel}_{self.name}" for channel in self.ws.model().config.channels})
+        self.ws = self.ws.rename(
+            channels={
+                channel: f"{channel}_{self.name}"
+                for channel in self.ws.model().config.channels
+            }
+        )
 
     def mark_modifiers(self) -> None:
         """
-        Ensure names of modifiers are unique by appending the name of the individual analysis.
+        Ensure names of modifiers are unique
+        by appending the name of the individual analysis.
         """
         modifiers = {}
         for modifier in self.ws.model().config.parameters:
             if modifier == "lumi":
-                continue # renaming the lumi modifier breaks assumptions of pyhf
+                # renaming the lumi modifier breaks assumptions of pyhf
+                continue
             if modifier == self.ws.get_measurement()["config"]["poi"]:
-                continue # do not rename POI
+                continue  # do not rename POI
             modifiers[modifier] = modifier + "_" + self.name.replace(" ", "")
         self.rename_modifiers(names=modifiers)
 
@@ -40,50 +49,68 @@ class Workspace(WorkspaceBase):
         Remove modifiers from workspace for certain samples.
 
         Arguments:
-            modifiers_to_prune (Dict[str, List[str]]): dictionary with sample name as key and list of modifiers to prune as value
+            modifiers_to_prune (Dict[str, List[str]]):
+                dictionary with sample name as key
+                and list of modifiers to prune as value
         """
         for i_channel, channel in enumerate(self.ws["channels"]):
             for i_sample, sample in enumerate(channel["samples"]):
                 for prune_sample, prune_tags in modifiers_to_prune.items():
-                    if not re.match(prune_sample, sample["name"]): continue
-                    
+                    if not re.match(prune_sample, sample["name"]):
+                        continue
+
                     # position of modifier to prune is appended to list
                     prune_modifiers: List[int] = []
                     for i_modifier, modifier in enumerate(sample["modifiers"]):
-                        # skip if already added to list when it matches multiple pruning tags
-                        if i_modifier in prune_modifiers: continue
+                        # skip if already added to list
+                        # when it matches multiple pruning tags
+                        if i_modifier in prune_modifiers:
+                            continue
 
                         for prune_tag in prune_tags:
-                            if not re.match(prune_tag, modifier["name"]): continue
+                            if not re.match(prune_tag, modifier["name"]):
+                                continue
                             prune_modifiers.append(i_modifier)
 
                     # delete in reverse to avoid problems with indeces
                     for i in sorted(prune_modifiers, reverse=True):
-                        del self.ws["channels"][i_channel]["samples"][i_sample]["modifiers"][i]
+                        del self.ws["channels"][i_channel]["samples"][i_sample][
+                            "modifiers"
+                        ][i]
 
     def prune_regions(self, regions_to_keep: List[str]) -> None:
         """
         Remove regions from workspace.
-        
+
         Arguments:
-            regions_to_keep (List[str]): only regions with name matching one of the strings provided in this list are kept
+            regions_to_keep (List[str]):
+                only regions with name matching one of the strings
+                provided in this list are kept
         """
-        prune_regions = [region["name"] for region in self.ws["channels"] if region["name"] not in regions_to_keep]
+        prune_regions = [
+            region["name"]
+            for region in self.ws["channels"]
+            if region["name"] not in regions_to_keep
+        ]
         self.ws = self.ws.prune(channels=prune_regions)
 
     def rename_measurement(self, name: str = "Measurement") -> None:
         """
         Rename the measurement to ensure consistency when combining workspaces.
-       
+
         Arguments:
-            name (str): New name for the measurement (default: 'Measurement')
+            name (str):
+                new name for the measurement (default: 'Measurement')
         """
-        self.ws = self.ws.rename(measurements={self.ws.get_measurement()["name"]: name})
+        self.ws = self.ws.rename(
+            measurements={self.ws.get_measurement()["name"]: name}
+        )
 
     def rename_modifiers(self, names: Dict[str, str]) -> None:
         """
         Arguments:
-            names (Dict[str, str]): dictionary mapping old modifier names to new modifier names
+            names (Dict[str, str]):
+                dictionary mapping old modifier names to new modifier names
         """
         self.ws = self.ws.rename(modifiers=names)
 
@@ -96,14 +123,16 @@ class Workspace(WorkspaceBase):
         """
         old_poi = self.ws["measurements"][0]["config"]["poi"]
         self.ws["measurements"][0]["config"]["poi"] = poi_name
-        self.rename_modifiers({ old_poi: poi_name } )
+        self.rename_modifiers({old_poi: poi_name})
 
     def rename_samples(self, names: Dict[str, str]) -> None:
         """
         Rename sample names.
 
         Arguments:
-            names (Dict[str, str]): dictionary with old sample names as key and new samples names as value
+            names (Dict[str, str]):
+                dictionary with old sample names as key
+                and new samples names as value
         """
         self.ws = self.ws.rename(samples=names)
 
@@ -112,11 +141,19 @@ class Workspace(WorkspaceBase):
         Modify settings for measurement parameters.
 
         Arguments:
-            parameters (dict): dictionary with names of measurement parameters to modify as keys and dictionary of settings as value
+            parameters (dict):
+                dictionary with names of measurement parameters to modify
+                as keys and dictionary of settings as value
         """
         for parameter, settings in parameters.items():
-            i_param = common.utils.get_parameter_index_in_measurement(self.ws.get_measurement(), parameter)
+            i_param = common.utils.get_parameter_index_in_measurement(
+                self.ws.get_measurement(), parameter
+            )
             for setting, value in settings.items():
-                self.ws["measurements"][0]["config"]["parameters"][i_param][setting] = value
+                self.ws["measurements"][0]["config"]["parameters"][i_param][
+                    setting
+                ] = value
             if parameter == "lumi" and "fixed" not in settings.keys():
-                self.ws["measurements"][0]["config"]["parameters"][i_param].pop( "fixed", None )
+                self.ws["measurements"][0]["config"]["parameters"][i_param].pop(
+                    "fixed", None
+                )
