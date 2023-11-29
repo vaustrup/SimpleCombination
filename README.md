@@ -30,3 +30,11 @@ python combine.py -a analysis1 analysis2 -c combination3
 ```
 
 which will load the settings for the individual analyses and for the combination.
+
+## Contributors
+
+- Volker Austrup (ATLAS, University of Manchester)
+
+- Mahsana Haleem (ATLAS, Julius Maximilian University Würzburg)
+
+- Patrick Rieck (ATLAS, New York University)
