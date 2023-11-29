@@ -7,7 +7,7 @@ import pyhf
 from common.workspace import Workspace
 from common.combinationbase import CombinationBase
 
-from typing import Dict, List, Optional
+from typing import Optional
 
 from common.logger import logger
 
@@ -23,10 +23,10 @@ class AnalysisBase(ABC):
     """
 
     name: str
-    parameters: Dict[str, str]
+    parameters: dict[str, str]
 
     @property
-    def modifiers_to_prune(self) -> Dict[str, List[str]]:
+    def modifiers_to_prune(self) -> dict[str, list[str]]:
         """
         A dictionary with sample name as key and list of modifier names
         to prune for given sample as value
@@ -43,7 +43,7 @@ class AnalysisBase(ABC):
         return {}
 
     @property
-    def samples_to_rename(self) -> Dict[str, str]:
+    def samples_to_rename(self) -> dict[str, str]:
         """
         A dictionary mapping old sample names to new sample names
         can be provided in the child class in the form
@@ -59,7 +59,7 @@ class AnalysisBase(ABC):
         return {}
 
     @property
-    def modifiers_to_rename(self) -> Dict[str, str]:
+    def modifiers_to_rename(self) -> dict[str, str]:
         """
         A dictionary mapping old modifier names to new modifier names
         can be provided in the child class in the form
@@ -75,7 +75,7 @@ class AnalysisBase(ABC):
         return {}
 
     @abstractmethod
-    def filename(self, p: dict) -> str:
+    def filename(self) -> str:
         """
         A function returning the name of the file containing the workspace
         based on given parameters needs to be defined in the child class.

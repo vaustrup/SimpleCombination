@@ -1,17 +1,17 @@
 import argparse
 
-from typing import List, Optional
+from typing import Optional
 
 from common.logger import logger
 
 
-def parse_parameters(parameter_list: Optional[List[str]]) -> dict:
+def parse_parameters(parameter_list: Optional[list[str]]) -> dict:
     """
     Split parameters provided as a list of strings
     representing key-value pairs separated by a equal-sign.
 
     Arguments:
-        parameter_list (Optional[List[str]]):
+        parameter_list (Optional[list[str]]):
             list of strings containing key-value pairs separated by =
 
     Returns:
@@ -31,12 +31,14 @@ def parse_parameters(parameter_list: Optional[List[str]]) -> dict:
     return parameter_dict
 
 
-def get_parameter_index_in_measurement(measurement, parameter_name) -> int:
+def get_parameter_index_in_measurement(
+    measurement: dict, parameter_name: str
+) -> int:
     """
     Finds index of parameter with given name in list stored in measurement.
 
     Arguments:
-        measurement (Dict): measurement obtained from pyhf.Workspace
+        measurement (dict): measurement obtained from pyhf.Workspace
         parameter_name (string): name of parameter to find index of
 
     Returns index of parameter in list in measurement as int

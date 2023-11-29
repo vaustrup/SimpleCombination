@@ -7,8 +7,6 @@ import common.limits
 
 from common.logger import logger
 
-from typing import Dict
-
 
 class WorkspaceBase:
     def __init__(self, name: str, ws: pyhf.Workspace):
@@ -50,7 +48,7 @@ class WorkspaceBase:
         # return cabinetry.fit.limit(model=self._model, data=self._data)
         return common.limits.limit_customScan(self._model, self._data)
 
-    def correlate_NPs(self, correlated_NPs: Dict[str, Dict]) -> None:
+    def correlate_NPs(self, correlated_NPs: dict[str, dict]) -> None:
         for new_name, old_names in correlated_NPs.items():
             if not self.name in old_names:
                 continue

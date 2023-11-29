@@ -5,8 +5,6 @@ import pyhf
 from common.workspacebase import WorkspaceBase
 import common.utils
 
-from typing import Dict, List
-
 from common.logger import logger
 
 
@@ -46,12 +44,12 @@ class Workspace(WorkspaceBase):
             modifiers[modifier] = modifier + "_" + self.name.replace(" ", "")
         self.rename_modifiers(names=modifiers)
 
-    def prune_modifiers(self, modifiers_to_prune: Dict[str, List[str]]) -> None:
+    def prune_modifiers(self, modifiers_to_prune: dict[str, list[str]]) -> None:
         """
         Remove modifiers from workspace for certain samples.
 
         Arguments:
-            modifiers_to_prune (Dict[str, List[str]]):
+            modifiers_to_prune (dict[str, list[str]]):
                 dictionary with sample name as key
                 and list of modifiers to prune as value
         """
@@ -62,7 +60,7 @@ class Workspace(WorkspaceBase):
                         continue
 
                     # position of modifier to prune is appended to list
-                    prune_modifiers: List[int] = []
+                    prune_modifiers: list[int] = []
                     for i_modifier, modifier in enumerate(sample["modifiers"]):
                         # skip if already added to list
                         # when it matches multiple pruning tags
@@ -80,12 +78,12 @@ class Workspace(WorkspaceBase):
                             "modifiers"
                         ][i]
 
-    def prune_regions(self, regions_to_keep: List[str]) -> None:
+    def prune_regions(self, regions_to_keep: list[str]) -> None:
         """
         Remove regions from workspace.
 
         Arguments:
-            regions_to_keep (List[str]):
+            regions_to_keep (list[str]):
                 only regions with name matching one of the strings
                 provided in this list are kept
         """
@@ -111,10 +109,10 @@ class Workspace(WorkspaceBase):
             measurements={self.ws.get_measurement()["name"]: name}
         )
 
-    def rename_modifiers(self, names: Dict[str, str]) -> None:
+    def rename_modifiers(self, names: dict[str, str]) -> None:
         """
         Arguments:
-            names (Dict[str, str]):
+            names (dict[str, str]):
                 dictionary mapping old modifier names to new modifier names
         """
         self.ws = self.ws.rename(modifiers=names)
@@ -130,12 +128,12 @@ class Workspace(WorkspaceBase):
         self.ws["measurements"][0]["config"]["poi"] = poi_name
         self.rename_modifiers({old_poi: poi_name})
 
-    def rename_samples(self, names: Dict[str, str]) -> None:
+    def rename_samples(self, names: dict[str, str]) -> None:
         """
         Rename sample names.
 
         Arguments:
-            names (Dict[str, str]):
+            names (dict[str, str]):
                 dictionary with old sample names as key
                 and new samples names as value
         """

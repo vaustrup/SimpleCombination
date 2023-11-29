@@ -3,7 +3,7 @@ import numpy as np
 import cabinetry
 import pyhf
 
-from typing import List, Optional, Tuple, Union
+from typing import Optional, Union
 
 from common.logger import logger
 
@@ -73,14 +73,14 @@ def GetObsLimitBisection(
 
 def limit_customScan(
     model: pyhf.pdf.Model,
-    data: List[float],
-    bracket: Optional[Union[List[float], Tuple[float, float]]] = None,
+    data: list[float],
+    bracket: Optional[Union[list[float], tuple[float, float]]] = None,
     toleranceObs: float = 0.05,
     maxiterObs: int = 50,
     nIterExp: int = 50,
-    init_pars: Optional[List[float]] = None,
-    par_bounds: Optional[List[Tuple[float, float]]] = None,
-    fix_pars: Optional[List[bool]] = None,
+    init_pars: Optional[list[float]] = None,
+    par_bounds: Optional[list[tuple[float, float]]] = None,
+    fix_pars: Optional[list[bool]] = None,
 ) -> cabinetry.fit.LimitResults:
     """
     Calculates observed and expected 95% confidence level

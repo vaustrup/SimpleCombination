@@ -3,19 +3,17 @@ import pyhf
 from common.workspacebase import WorkspaceBase
 from common.workspace import Workspace
 
-from typing import List
-
 from common.logger import logger
 
 
 class CombinedWorkspace(WorkspaceBase):
-    def __init__(self, name: str, workspaces: List[Workspace]):
+    def __init__(self, name: str, workspaces: list[Workspace]):
         self.name = name
         self.workspaces = workspaces
         self.ws = self._combine_workspaces(workspaces)
 
     @staticmethod
-    def _combine_workspaces(workspaces: List[Workspace]):
+    def _combine_workspaces(workspaces: list[Workspace]):
         ws = workspaces[0].ws
         if len(workspaces) == 1:
             logger.info("There is only one workspace. Nothing to combine.")

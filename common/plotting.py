@@ -8,15 +8,15 @@ import pathlib
 
 import cabinetry
 
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 from common.logger import logger
 
 
 def norm_factors(
-    fit_results: List[cabinetry.fit.FitResults],
+    fit_results: list[cabinetry.fit.FitResults],
     figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[List[str]] = None,
+    model_names: Optional[list[str]] = None,
 ) -> None:
     factors = []
     for fit_result in fit_results:
@@ -141,9 +141,9 @@ def ranking(
 
 
 def limit_comparison(
-    limit_results: List[cabinetry.fit.LimitResults],
+    limit_results: list[cabinetry.fit.LimitResults],
     figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[List[str]] = None,
+    model_names: Optional[list[str]] = None,
 ) -> None:
     num_results = len(limit_results)
     step_size = 2.0
