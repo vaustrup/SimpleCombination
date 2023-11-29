@@ -1,0 +1,770 @@
+{
+    "channels": [
+        {
+            "name": "CR1",
+            "samples": [
+                {
+                    "data": [
+                        699.0728149414062
+                    ],
+                    "modifiers": [
+                        {
+                            "data": [
+                                4.063580766709323
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 0.978657,
+                                "lo": 1.02134
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01213,
+                                "lo": 0.987865
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg2",
+                            "type": "normfactor"
+                        },
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        }
+                    ],
+                    "name": "background2"
+                },
+                {
+                    "data": [
+                        1414.6669921875
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                15.669841679294727
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.017,
+                                "lo": 0.983
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg5",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background5"
+                },
+                {
+                    "data": [
+                        218.90982055664062
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                3.3866537106539734
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg6",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background6"
+                },
+                {
+                    "data": [
+                        5.111557960510254
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.43229299388197184
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01866,
+                                "lo": 0.981337
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.02477,
+                                "lo": 0.975228
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        }
+                    ],
+                    "name": "background1"
+                },
+                {
+                    "data": [
+                        5.803306579589844
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.21822695972301304
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.017,
+                                "lo": 0.983
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 0.961847,
+                                "lo": 1.03815
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01869,
+                                "lo": 0.981308
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        }
+                    ],
+                    "name": "background3"
+                },
+                {
+                    "data": [
+                        0.07413660734891891
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.005927526338147498
+                            ],
+                            "name": "staterror_CR1",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.05,
+                                "lo": 1.05
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "SigXsecOverSM",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "signal_M1300GeV"
+                }
+            ]
+        },
+        {
+            "name": "CR2",
+            "samples": [
+                {
+                    "data": [
+                        158.76412963867188
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                2.01035608642545
+                            ],
+                            "name": "staterror_CR2",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.017,
+                                "lo": 0.983
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.03661,
+                                "lo": 0.963388
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01378,
+                                "lo": 0.986218
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg2",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background2"
+                },
+                {
+                    "data": [
+                        130.52096557617188
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                4.41960704755487
+                            ],
+                            "name": "staterror_CR2",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.017,
+                                "lo": 0.983
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg5",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background5"
+                },
+                {
+                    "data": [
+                        226.2451629638672
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                3.396207073019993
+                            ],
+                            "name": "staterror_CR2",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01049,
+                                "lo": 0.989506
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01463,
+                                "lo": 0.98537
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg6",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background6"
+                },
+                {
+                    "data": [
+                        2.4847021102905273
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.2697856869053888
+                            ],
+                            "name": "staterror_CR2",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 0.969788,
+                                "lo": 1.03021
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        }
+                    ],
+                    "name": "background3"
+                },
+                {
+                    "data": [
+                        0.03795504570007324
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.004009176532919178
+                            ],
+                            "name": "staterror_CR2",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.05,
+                                "lo": 0.95
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "SigXsecOverSM",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "signal_M1300GeV"
+                }
+            ]
+        },
+        {
+            "name": "SR",
+            "samples": [
+                {
+                    "data": [
+                        14.230772018432617,
+                        11.762730598449707,
+                        9.236303329467773,
+                        7.396363735198975,
+                        2.592421293258667,
+                        1.0651308298110962
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": {
+                                "hi": 0.97348,
+                                "lo": 1.02652
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01403,
+                                "lo": 0.985971
+                            },
+                            "name": "normsys1",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.01907,
+                                "lo": 0.980928
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg2",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background2"
+                },
+                {
+                    "data": [
+                        10.026792526245117,
+                        8.262269973754883,
+                        10.07347297668457,
+                        8.985913276672363,
+                        6.928437232971191,
+                        3.1473138332366943
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                1.3448625873911262,
+                                0.8743327081108438,
+                                1.4654366918021735,
+                                1.438743960852519,
+                                1.3087130592300755,
+                                0.5301067066092328
+                            ],
+                            "name": "staterror_SR",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.017,
+                                "lo": 0.983
+                            },
+                            "name": "normsys3",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg5",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background5"
+                },
+                {
+                    "data": [
+                        13.327092170715332,
+                        10.391469955444336,
+                        10.867176055908203,
+                        12.19141960144043,
+                        4.699942111968994,
+                        2.2506439685821533
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.703482194384308,
+                                0.5681906193425019,
+                                0.5945141524379548,
+                                0.6199875865000429,
+                                0.3357362749566927,
+                                0.247656768842902
+                            ],
+                            "name": "staterror_SR",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi_data": [
+                                    13.070420265197754,
+                                    10.343018531799316,
+                                    11.000414848327637,
+                                    12.176932334899902,
+                                    4.808629989624023,
+                                    2.3283278942108154
+                                ],
+                                "lo_data": [
+                                    13.58376407623291,
+                                    10.439921379089355,
+                                    10.73393726348877,
+                                    12.205906867980957,
+                                    4.591254234313965,
+                                    2.172960042953491
+                                ]
+                            },
+                            "name": "histosys1",
+                            "type": "histosys"
+                        },
+                        {
+                            "data": null,
+                            "name": "norm_bkg6",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "background6"
+                },
+                {
+                    "data": [
+                        4.036871910095215,
+                        2.806966781616211,
+                        2.3990960121154785,
+                        2.6070785522460938,
+                        1.534134030342102,
+                        0.6047046780586243
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": {
+                                "hi_data": [
+                                    3.9868533611297607,
+                                    2.8307361602783203,
+                                    2.4169225692749023,
+                                    2.6353466510772705,
+                                    1.5245604515075684,
+                                    0.5944327712059021
+                                ],
+                                "lo_data": [
+                                    4.088736057281494,
+                                    2.782320499420166,
+                                    2.3806116580963135,
+                                    2.5777673721313477,
+                                    1.5440608263015747,
+                                    0.6153556108474731
+                                ]
+                            },
+                            "name": "histosys2",
+                            "type": "histosys"
+                        }
+                    ],
+                    "name": "background3"
+                },
+                {
+                    "data": [
+                        1.4653048515319824,
+                        0.9638854265213013,
+                        1.2148984670639038,
+                        1.0877522230148315,
+                        0.5897231698036194,
+                        0.32547155022621155
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        }
+                    ],
+                    "name": "background4"
+                },
+                {
+                    "data": [
+                        0.2935057580471039,
+                        0.43870338797569275,
+                        0.7989023327827454,
+                        1.9738893508911133,
+                        3.4631316661834717,
+                        12.697188377380371
+                    ],
+                    "modifiers": [
+                        {
+                            "data": null,
+                            "name": "lumi",
+                            "type": "lumi"
+                        },
+                        {
+                            "data": [
+                                0.01202996437912807,
+                                0.014467405370876664,
+                                0.01917246851376305,
+                                0.030561691574874504,
+                                0.04036320884810474,
+                                0.0767806557086177
+                            ],
+                            "name": "staterror_SR",
+                            "type": "staterror"
+                        },
+                        {
+                            "data": {
+                                "hi": 1.05,
+                                "lo": 0.95
+                            },
+                            "name": "normsys2",
+                            "type": "normsys"
+                        },
+                        {
+                            "data": null,
+                            "name": "SigXsecOverSM",
+                            "type": "normfactor"
+                        }
+                    ],
+                    "name": "signal_M1300GeV"
+                }
+            ]
+        }
+    ],
+    "measurements": [
+        {
+            "config": {
+                "parameters": [
+                    {
+                        "auxdata": [
+                            1.0
+                        ],
+                        "bounds": [
+                            [
+                                0.5,
+                                1.5
+                            ]
+                        ],
+                        "fixed": true,
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "lumi",
+                        "sigmas": [
+                            0.1
+                        ]
+                    },
+                    {
+                        "bounds": [
+                            [
+                                0.0,
+                                2.0
+                            ]
+                        ],
+                        "fixed": false,
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "norm_bkg2"
+                    },
+                    {
+                        "bounds": [
+                            [
+                                0.0,
+                                2.0
+                            ]
+                        ],
+                        "fixed": false,
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "norm_bkg5"
+                    },
+                    {
+                        "bounds": [
+                            [
+                                0.0,
+                                2.0
+                            ]
+                        ],
+                        "fixed": false,
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "norm_bkg6"
+                    },
+                    {
+                        "bounds": [
+                            [
+                                -100.0,
+                                100.0
+                            ]
+                        ],
+                        "fixed": false,
+                        "inits": [
+                            1.0
+                        ],
+                        "name": "SigXsecOverSM"
+                    }
+                ],
+                "poi": "SigXsecOverSM"
+            },
+            "name": "Search"
+        }
+    ],
+    "observations": [
+        {
+            "data": [
+                2310.0
+            ],
+            "name": "CR1"
+        },
+        {
+            "data": [
+                430.0
+            ],
+            "name": "CR2"
+        },
+        {
+            "data": [
+                50.0,
+                29.0,
+                43.0,
+                32.0,
+                21.0,
+                6.0
+            ],
+            "name": "SR"
+        }
+    ],
+    "version": "1.0.0"
+}
