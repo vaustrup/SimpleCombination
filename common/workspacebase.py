@@ -7,6 +7,8 @@ import common.limits
 
 from common.logger import logger
 
+from typing import Dict
+
 
 class WorkspaceBase:
     def __init__(self, name: str, ws: pyhf.Workspace):
@@ -47,3 +49,17 @@ class WorkspaceBase:
         logger.debug(f"Starting limit setting for workspace {self.name}.")
         # return cabinetry.fit.limit(model=self._model, data=self._data)
         return common.limits.limit_customScan(self._model, self._data)
+
+    def correlate_NPs(self, correlated_NPs: Dict[str, Dict]) -> None:
+        for new_name, old_names in correlated_NPs.items():
+            if not self.name in old_names:
+                continue
+            old_name = f"{old_names[self.name]}_{self.name}"
+            if not old_name in self.ws.model().config.parameters:
+                logger.warning(
+                    f"Cannot correlate NP {old_name}, \
+                               not found in list of model parameters for \
+                               analysis {self.name}."
+                )
+                continue
+            self.ws = self.ws.rename({old_name: new_name})

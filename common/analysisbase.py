@@ -86,7 +86,7 @@ class AnalysisBase(ABC):
         )
 
     @abstractmethod
-    def signalname(self, p: dict) -> str:
+    def signalname(self) -> str:
         """
         A function returning the name of the signal process
         based on given parameters needs to be defined in the child class.
@@ -99,7 +99,6 @@ class AnalysisBase(ABC):
     def _modify_workspace(
         self,
         workspace: Workspace,
-        parameters: Dict,
         combination: Optional[CombinationBase] = None,
     ) -> Workspace:
         """
@@ -136,11 +135,13 @@ class AnalysisBase(ABC):
 
         workspace.mark_regions()
         workspace.mark_modifiers()
+        if combination is not None:
+            workspace.correlate_NPs(combination.correlated_NPs)
 
         return workspace
 
     def workspace(
-        self, parameters: Dict, combination: Optional[CombinationBase] = None
+        self, combination: Optional[CombinationBase] = None
     ) -> Workspace:
         """
         Read pyhf.Workspace from input file and modify it according
@@ -167,5 +168,5 @@ class AnalysisBase(ABC):
                 )
 
         workspace = Workspace(name=self.name, ws=pyhf.Workspace(spec))
-        workspace = self._modify_workspace(workspace, parameters, combination)
+        workspace = self._modify_workspace(workspace, combination)
         return workspace

@@ -60,10 +60,32 @@ class CombinationBase(ABC):
         can be provided in the child class as
 
         measurement_parameters = {
-            'parameter1': {'setting1': 'foo'}
+            'parameter1': {'setting1': 'foo'},
             'parameter2': {'setting1': 'bar'}
         }
 
         These modifications are applied to all individual analysis workspaces.
+        """
+        return {}
+
+    # unfortunately we cannot use correlated_NPs = {...}
+    # so we have to make do with the getter here
+    # and override it with a dict in the child class
+    @property
+    def correlated_NPs(self):
+        """
+        A dictionary of nuisance parameters to correlate across analyses
+        can be provided in the child class as
+
+        correlated_NPs = {
+            'np1': {'analysis1': 'foo', 'analysis2': 'bar'},
+            'np2': {'analysis1': 'baz', 'analysis2': 'qux'}
+        }
+
+        where 'np1' and 'np2' are the names of the correlated NPs
+        in the combined workspace, and their corresponding names in the
+        individual input workspaces are given as key-value pairs with
+        the analysis name as key and the name of the NP to be correlated
+        as value
         """
         return {}
