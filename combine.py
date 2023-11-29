@@ -1,13 +1,11 @@
 import pathlib
-import logging
 import sys
 
 from common.combinedworkspace import CombinedWorkspace
 import common.helpers
 import common.plotting
 import common.utils
-
-logger = logging.getLogger(__name__)
+from common.logger import logger
 
 
 def main():
@@ -17,13 +15,18 @@ def main():
 
     args = common.utils.parse_arguments()
 
-    handler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter(
+    file_handler = logger.FileHandler(
+        f"{args.output_dir}/{args.combination_name}_output.log"
+    )
+    stream_handler = logger.StreamHandler(sys.stdout)
+    formatter = logger.Formatter(
         "%(asctime)s [%(levelname)4s]: %(message)s", "%H:%M:%S"
     )
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    logger.setLevel(args.output_level)
+    stream_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+    logger.basicConfig(
+        handlers=[file_handler, stream_handler], level=args.output_level
+    )
 
     parameters = common.utils.parse_parameters(args.parameters)
 
@@ -37,20 +40,6 @@ def main():
         for analysis_name in args.analysis_names
     ]
 
-    combined_ws = CombinedWorkspace(name="Combined", workspaces=workspaces)
-    combined_fit_results = combined_ws.fit_results()
-    for label, bestfit, uncertainty in zip(
-        combined_fit_results.labels,
-        combined_fit_results.bestfit,
-        combined_fit_results.uncertainty,
-    ):
-        logger.debug(f"{label}: {bestfit} +/- {uncertainty}")
-
-    fit_results = [combined_fit_results]
-    if args.fit_comparisons:
-        for workspace in workspaces:
-            fit_results.append(workspace.fit_results())
-
     output_folder = pathlib.Path(args.output_dir)
     if not output_folder.exists():
         output_folder.mkdir(parents=True)
@@ -59,6 +48,24 @@ def main():
             "Provided path {args.output_dir} is not a folder. \
                 Cannot create directory."
         )
+
+    combined_ws = CombinedWorkspace(name="Combined", workspaces=workspaces)
+    combined_fit_results = combined_ws.fit_results()
+    with open(output_folder / "fit_results.txt", "w") as f:
+        for label, bestfit, uncertainty in zip(
+            combined_fit_results.labels,
+            combined_fit_results.bestfit,
+            combined_fit_results.uncertainty,
+        ):
+            np = f"{label}: {bestfit} +/- {uncertainty}"
+            logger.debug(np)
+            f.write(f"{np}\n")
+
+    fit_results = [combined_fit_results]
+    if args.fit_comparisons:
+        for workspace in workspaces:
+            fit_results.append(workspace.fit_results())
+
     figure_folder = output_folder / "figures"
     if not figure_folder.exists():
         figure_folder.mkdir()

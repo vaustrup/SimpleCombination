@@ -1,9 +1,8 @@
 import argparse
-import logging
 
 from typing import List, Optional
 
-logger = logging.getLogger(__name__)
+from common.logger import logger
 
 
 def parse_parameters(parameter_list: Optional[List[str]]) -> dict:
@@ -21,12 +20,14 @@ def parse_parameters(parameter_list: Optional[List[str]]) -> dict:
         an empty dictionary if parameter_list is None.
     """
     if parameter_list is None:
+        logger.debug("No parameters provided. Returning empty dictionary.")
         return {}
 
     parameter_dict = {}
     for parameter in parameter_list:
         k, v = parameter.split("=")
         parameter_dict[k] = v
+    logger.debug(f"Parsed {len(parameter_list)} parameters.")
     return parameter_dict
 
 

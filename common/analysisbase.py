@@ -7,9 +7,9 @@ import pyhf
 from common.workspace import Workspace
 from common.combinationbase import CombinationBase
 
-import logging
-
 from typing import Dict, List, Optional
+
+from common.logger import logger
 
 
 @dataclass
@@ -24,7 +24,6 @@ class AnalysisBase(ABC):
 
     name: str
     parameters: Dict[str, str]
-    _logger = logging.getLogger(__name__)
 
     @property
     def modifiers_to_prune(self) -> Dict[str, List[str]]:
@@ -118,15 +117,13 @@ class AnalysisBase(ABC):
 
         Do not override.
         """
-        self._logger.info(f"Modify workspace for analysis {self.name}.")
+        logger.info(f"Modify workspace for analysis {self.name}.")
         workspace.rename_measurement()
         workspace.rename_poi()
         workspace.prune_modifiers(self.modifiers_to_prune)
 
         if combination is not None:
-            self._logger.info(
-                f"Apply settings for combination {combination.name}."
-            )
+            logger.info(f"Apply settings for combination {combination.name}.")
             if combination.channels is not None:
                 workspace.prune_regions(combination.channels[self.name].keys())
             workspace.set_measurement_parameters(

@@ -1,4 +1,3 @@
-import logging
 import numpy as np
 
 import cabinetry
@@ -6,7 +5,7 @@ import pyhf
 
 from typing import List, Optional, Tuple, Union
 
-logger = logging.getLogger(__name__)
+from common.logger import logger
 
 
 def GetObsLimitBisection(

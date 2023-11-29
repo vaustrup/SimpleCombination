@@ -3,8 +3,6 @@ from matplotlib import patches
 from matplotlib import lines
 import matplotlib.pyplot as plt
 
-import logging
-
 import numpy as np
 import pathlib
 
@@ -12,7 +10,7 @@ import cabinetry
 
 from typing import List, Optional, Union
 
-logger = logging.getLogger(__name__)
+from common.logger import logger
 
 
 def norm_factors(

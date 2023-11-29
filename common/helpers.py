@@ -1,13 +1,12 @@
 import importlib
 import inspect
-import logging
 
 from common.combinationbase import CombinationBase
 from common.workspace import Workspace
 
 from typing import Dict, Optional
 
-logger = logging.getLogger(__name__)
+from common.logger import logger
 
 
 def get_combination(

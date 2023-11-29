@@ -7,6 +7,8 @@ import common.utils
 
 from typing import Dict, List
 
+from common.logger import logger
+
 
 class Workspace(WorkspaceBase):
     """
@@ -92,6 +94,9 @@ class Workspace(WorkspaceBase):
             for region in self.ws["channels"]
             if region["name"] not in regions_to_keep
         ]
+        logger.info(
+            f"Pruning {len(prune_regions)} regions from workspace {self.name}."
+        )
         self.ws = self.ws.prune(channels=prune_regions)
 
     def rename_measurement(self, name: str = "Measurement") -> None:

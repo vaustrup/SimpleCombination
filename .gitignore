@@ -3,3 +3,5 @@ venv
 *.pdf
 analyses/*.py
 combinations/*.py
+*.log
+*.txt
