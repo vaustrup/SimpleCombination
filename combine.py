@@ -56,7 +56,14 @@ def main():
         for analysis_name in args.analysis_names
     ]
 
+    figure_folder = output_folder / "figures"
+    if not figure_folder.exists():
+        figure_folder.mkdir()
+
     combined_ws = CombinedWorkspace(name="Combined", workspaces=workspaces)
+    common.plotting.modifier_grid(
+        model=combined_ws.model, figure_folder=figure_folder
+    )
     combined_fit_results = combined_ws.fit_results()
     with open(output_folder / "fit_results.txt", "w") as f:
         for label, bestfit, uncertainty in zip(
@@ -73,9 +80,6 @@ def main():
         for workspace in workspaces:
             fit_results.append(workspace.fit_results())
 
-    figure_folder = output_folder / "figures"
-    if not figure_folder.exists():
-        figure_folder.mkdir()
     logger.debug("Creating pull plot.")
     common.plotting.pull_plot(
         fit_results=combined_fit_results, figure_folder=figure_folder

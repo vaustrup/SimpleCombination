@@ -1,11 +1,18 @@
 import pathlib
 
 import cabinetry
+import pyhf
 
 from typing import Optional, Union
 
 import common.plotting.normalisation
 import common.plotting.limits
+
+
+def modifier_grid(
+    model: pyhf.pdf.Model, figure_folder: Union[str, pathlib.Path] = ""
+) -> None:
+    cabinetry.visualize.modifier_grid(model=model, figure_folder=figure_folder)
 
 
 def norm_factors(
