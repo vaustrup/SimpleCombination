@@ -57,7 +57,7 @@ class WorkspaceBase:
         )
         if method == "bisect":
             return common.limitsetting.limit_customScan(self.model, self._data)
-        return cabinetry.fit.limit(model=self._model, data=self._data)
+        return cabinetry.fit.limit(model=self.model, data=self._data)
 
     def correlate_NPs(self, correlated_NPs: dict[str, dict]) -> None:
         for new_name, old_names in correlated_NPs.items():
