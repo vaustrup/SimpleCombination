@@ -110,6 +110,15 @@ def parse_arguments() -> argparse.Namespace:
         help="Set flag to run fits for individual analyses \
                 and compare with combined results.",
     )
+    parser.add_argument(
+        "--limit-method",
+        dest="limit_method",
+        choices=["bisect", "default"],
+        default="default",
+        help="Method to use for limit setting. \
+                Options are 'default' and 'bisect'. \
+                Default choice is 'default'.",
+    )
 
     args = parser.parse_args()
 

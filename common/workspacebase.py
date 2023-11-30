@@ -3,7 +3,7 @@ import functools
 import pyhf
 import cabinetry
 
-import common.limits
+import common.limitsetting
 
 from common.logger import logger
 
@@ -43,10 +43,21 @@ class WorkspaceBase:
             model=self.model, data=self._data, fit_results=self.fit_results()
         )
 
-    def limit_results(self):
-        logger.debug(f"Starting limit setting for workspace {self.name}.")
-        # return cabinetry.fit.limit(model=self._model, data=self._data)
-        return common.limits.limit_customScan(self.model, self._data)
+    def limit_results(self, method: str = "default"):
+        method = method.lower()
+        if method not in ["default", "bisect"]:
+            raise ValueError(
+                f"Method '{method}' chosen for limit setting \
+                             is not valid. \
+                             Available methods are 'default' and 'bisect'."
+            )
+        logger.debug(
+            f"Starting limit setting for workspace {self.name} \
+                using method '{method}'."
+        )
+        if method == "bisect":
+            return common.limitsetting.limit_customScan(self.model, self._data)
+        return cabinetry.fit.limit(model=self._model, data=self._data)
 
     def correlate_NPs(self, correlated_NPs: dict[str, dict]) -> None:
         for new_name, old_names in correlated_NPs.items():

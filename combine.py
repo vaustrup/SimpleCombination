@@ -100,10 +100,12 @@ def main():
     )
 
     logger.debug("Evaluating exclusion limits.")
-    combined_limit_results = combined_ws.limit_results()
+    combined_limit_results = combined_ws.limit_results(args.limit_method)
     limit_results = [combined_limit_results]
     if args.fit_comparisons:
-        limit_results.extend([ws.limit_results() for ws in workspaces])
+        limit_results.extend(
+            [ws.limit_results(args.limit_method) for ws in workspaces]
+        )
         common.plotting.limit_comparison(
             limit_results=limit_results,
             figure_folder=figure_folder,
