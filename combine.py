@@ -14,7 +14,22 @@ def main():
     """
 
     args = common.utils.parse_arguments()
+    parameters = common.utils.parse_parameters(args.parameters)
 
+    # create output directory based on given parameters
+    parameter_string = "_".join(
+        [k + v.replace(".", "p") for k, v in parameters.items()]
+    )
+    output_folder = pathlib.Path(args.output_dir) / parameter_string
+    if not output_folder.exists():
+        output_folder.mkdir(parents=True)
+    elif not output_folder.is_dir():
+        raise ValueError(
+            "Provided path {args.output_dir} is not a folder. \
+                Cannot create directory."
+        )
+
+    # configure logger
     file_handler = logger.FileHandler(
         f"{args.output_dir}/{args.combination_name}_output.log"
     )
@@ -28,8 +43,9 @@ def main():
         handlers=[file_handler, stream_handler], level=args.output_level
     )
 
-    parameters = common.utils.parse_parameters(args.parameters)
-
+    # now we can finally do the actual combination
+    # start by obtaining the combination settings
+    # and the individual workspaces
     combination = common.helpers.get_combination(args.combination_name)
     workspaces = [
         common.helpers.get_analysis_workspace(
@@ -39,15 +55,6 @@ def main():
         )
         for analysis_name in args.analysis_names
     ]
-
-    output_folder = pathlib.Path(args.output_dir)
-    if not output_folder.exists():
-        output_folder.mkdir(parents=True)
-    elif not output_folder.is_dir():
-        raise ValueError(
-            "Provided path {args.output_dir} is not a folder. \
-                Cannot create directory."
-        )
 
     combined_ws = CombinedWorkspace(name="Combined", workspaces=workspaces)
     combined_fit_results = combined_ws.fit_results()
