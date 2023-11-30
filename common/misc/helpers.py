@@ -6,7 +6,7 @@ from common.workspace import Workspace
 
 from typing import Optional
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 def get_combination(

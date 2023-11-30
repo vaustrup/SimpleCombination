@@ -7,7 +7,7 @@ import pathlib
 
 import cabinetry
 
-from common.logger import logger
+from common.misc.logger import logger
 
 from typing import Optional, Union
 

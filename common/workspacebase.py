@@ -5,7 +5,7 @@ import cabinetry
 
 import common.limitsetting
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 class WorkspaceBase:

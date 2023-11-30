@@ -3,7 +3,7 @@ import pyhf
 from common.workspacebase import WorkspaceBase
 from common.workspace import Workspace
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 class CombinedWorkspace(WorkspaceBase):

@@ -9,7 +9,7 @@ from common.combinationbase import CombinationBase
 
 from typing import Optional
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 @dataclass

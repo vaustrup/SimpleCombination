@@ -2,10 +2,10 @@ import pathlib
 import sys
 
 from common.combinedworkspace import CombinedWorkspace
-import common.helpers
+import common.misc.helpers
 import common.plotting
-import common.utils
-from common.logger import logger
+import common.misc.utils
+from common.misc.logger import logger
 
 
 def main():
@@ -13,8 +13,8 @@ def main():
     Combine pyhf workspaces and run statistical evaluations.
     """
 
-    args = common.utils.parse_arguments()
-    parameters = common.utils.parse_parameters(args.parameters)
+    args = common.misc.utils.parse_arguments()
+    parameters = common.misc.utils.parse_parameters(args.parameters)
 
     # create output directory based on given parameters
     parameter_string = "_".join(
@@ -46,9 +46,9 @@ def main():
     # now we can finally do the actual combination
     # start by obtaining the combination settings
     # and the individual workspaces
-    combination = common.helpers.get_combination(args.combination_name)
+    combination = common.misc.helpers.get_combination(args.combination_name)
     workspaces = [
-        common.helpers.get_analysis_workspace(
+        common.misc.helpers.get_analysis_workspace(
             analysis_name=analysis_name,
             parameters=parameters,
             combination=combination,

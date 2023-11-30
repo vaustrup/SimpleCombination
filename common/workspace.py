@@ -3,9 +3,9 @@ import re
 import pyhf
 
 from common.workspacebase import WorkspaceBase
-import common.utils
+import common.misc.utils
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 class Workspace(WorkspaceBase):
@@ -149,7 +149,7 @@ class Workspace(WorkspaceBase):
                 as keys and dictionary of settings as value
         """
         for parameter, settings in parameters.items():
-            i_param = common.utils.get_parameter_index_in_measurement(
+            i_param = common.misc.utils.get_parameter_index_in_measurement(
                 self.ws.get_measurement(), parameter
             )
             for setting, value in settings.items():

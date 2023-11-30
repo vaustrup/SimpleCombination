@@ -5,7 +5,7 @@ import pyhf
 
 from typing import Optional, Union
 
-from common.logger import logger
+from common.misc.logger import logger
 
 
 def GetObsLimitBisection(
