@@ -2,7 +2,7 @@ import re
 
 import pyhf
 
-from common.workspacebase import WorkspaceBase
+from common.workspaces.workspacebase import WorkspaceBase
 import common.misc.utils
 
 from common.misc.logger import logger

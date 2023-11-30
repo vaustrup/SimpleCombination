@@ -2,7 +2,7 @@ import importlib
 import inspect
 
 from common.combinationbase import CombinationBase
-from common.workspace import Workspace
+from common.workspaces import Workspace
 
 from typing import Optional
 

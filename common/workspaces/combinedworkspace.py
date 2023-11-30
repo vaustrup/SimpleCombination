@@ -1,7 +1,7 @@
 import pyhf
 
-from common.workspacebase import WorkspaceBase
-from common.workspace import Workspace
+from common.workspaces.workspacebase import WorkspaceBase
+from common.workspaces.workspace import Workspace
 
 from common.misc.logger import logger
 

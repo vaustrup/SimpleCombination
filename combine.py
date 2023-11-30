@@ -1,7 +1,7 @@
 import pathlib
 import sys
 
-from common.combinedworkspace import CombinedWorkspace
+from common.workspaces import CombinedWorkspace
 import common.misc.helpers
 import common.plotting
 import common.misc.utils

@@ -4,7 +4,7 @@ import json
 
 import pyhf
 
-from common.workspace import Workspace
+from common.workspaces import Workspace
 from common.combinationbase import CombinationBase
 
 from typing import Optional
