@@ -28,44 +28,53 @@ def limit_comparison(
 
     cl = limit_results[0].confidence_level
     for i, limit_result in enumerate(limit_results):
+        observed_limit = limit_result.observed_limit
+        expected_limit_two_sigma_down = limit_result.expected_limit[0]
+        expected_limit_one_sigma_down = limit_result.expected_limit[1]
+        expected_limit = limit_result.expected_limit[2]
+        expected_limit_one_sigma_up = limit_result.expected_limit[3]
+        expected_limit_two_sigma_up = limit_result.expected_limit[4]
+        y_low = step_size * (i - 0.5)
+        y_high = step_size * (i + 0.5)
+
         max_limit = max(
             [
                 max_limit,
-                limit_result.expected_limit[4],
-                limit_result.observed_limit,
+                expected_limit_two_sigma_up,
+                observed_limit,
             ]
         )
         min_limit = min(
             [
                 min_limit,
-                limit_result.expected_limit[0],
-                limit_result.observed_limit,
+                expected_limit_two_sigma_down,
+                observed_limit,
             ]
         )
         two_sigma = patches.Rectangle(
-            (limit_result.expected_limit[0], step_size * (i - 0.5)),
-            limit_result.expected_limit[4] - limit_result.expected_limit[0],
+            (expected_limit_two_sigma_down, y_low),
+            expected_limit_two_sigma_up - expected_limit_two_sigma_down,
             step_size,
             facecolor="yellow",
         )
         ax.add_patch(two_sigma)
         one_sigma = patches.Rectangle(
-            (limit_result.expected_limit[1], step_size * (i - 0.5)),
-            limit_result.expected_limit[3] - limit_result.expected_limit[1],
+            (expected_limit_one_sigma_down, y_low),
+            expected_limit_one_sigma_up - expected_limit_one_sigma_down,
             step_size,
             facecolor="green",
         )
         ax.add_patch(one_sigma)
         ax.vlines(
-            limit_result.observed_limit,
-            step_size * (i - 0.5),
-            step_size * (i + 0.5),
+            observed_limit,
+            y_low,
+            y_high,
             color="black",
         )
         ax.vlines(
-            limit_result.expected_limit[2],
-            step_size * (i - 0.5),
-            step_size * (i + 0.5),
+            expected_limit,
+            y_low,
+            y_high,
             color="black",
             linestyle="dashed",
         )
