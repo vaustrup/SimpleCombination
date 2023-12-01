@@ -10,7 +10,7 @@ from common.misc.logger import logger
 
 
 def get_combination(
-    combination_name: Optional[str],
+    combination_name: Optional[str] = None,
 ) -> Optional[CombinationBase]:
     """
     Retrieve configuration class for given combination.

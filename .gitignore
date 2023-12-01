@@ -3,5 +3,7 @@ venv
 *.pdf
 analyses/*.py
 combinations/*.py
+htmlcov
 *.log
 *.txt
+.coverage
