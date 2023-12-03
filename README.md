@@ -21,6 +21,8 @@ optional arguments:
   --fit-comparisons     Set flag to run fits for individual analyses and compare with combined results.
 ```
 
+## Configuration
+
 Configurations for individual analyses are provided as classes inheriting from the abstract base class `AnalysisBase`. Examples can be found in the `analyses/` folder.
 Similarly, combination-specific configurations are provided in a class inheriting from the abstract base class `CombinationBase`, for which examples can be found in the `combinations/` folder.
 For example, to combine the workspaces belonging to `analysis1` and `analysis2` in `combination3` run
@@ -30,6 +32,16 @@ python combine.py -a analysis1 analysis2 -c combination3
 ```
 
 which will load the settings for the individual analyses and for the combination.
+
+### Analyses
+
+Details on analysis-specific configuration can be found in the corresponding [README](analyses/README.md).
+
+
+### Combinations
+
+Details on combination-specific configuration can be found in the corresponding [README](combinations/README.md).
+
 
 ## Contributors
 
