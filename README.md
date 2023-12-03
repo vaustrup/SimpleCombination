@@ -42,6 +42,15 @@ Details on analysis-specific configuration can be found in the corresponding [RE
 
 Details on combination-specific configuration can be found in the corresponding [README](combinations/README.md).
 
+## Outputs
+
+Results of the combined fit are written to `<output_dir>/fit_results.txt`. Visualisations of the fit model and the fit results are provided in the form of standard `cabinetry` plots of the modifier grid, of the pulls, and of the correlations between nuisance parameters. In addition, values for free-floating normalisation factors obtained from the combined fit are compared to the individual fit results in the `normfactor` plot.
+
+![example of normfactor plot](test/examples/normfactors.png)
+
+A comparison of limits obtained from the combination with the limits obtained from the individual analyses is provided in the `limitcomparison` plot.
+
+![example of limit comparison plot](test/examples/limitcomparison.png)
 
 ## Contributors
 
