@@ -91,6 +91,7 @@ def main():
         pruning_threshold=0.1,
     )
     logger.debug("Creating normalisation factor plot.")
+    # this requires a patch for cabinetry to store the modifier type in the FitResults object
     model_names = [combined_ws.name]
     model_names.extend([analysis_name for analysis_name in args.analysis_names])
     common.plotting.norm_factors(
