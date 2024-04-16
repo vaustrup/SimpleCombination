@@ -1,6 +1,6 @@
 # SimpleCombination
 
-Combine statistically independent workspaces without writing complicated code. SimpleCombination is based on the pyhf and cabinetry Python packages and allows providing configurations for individual inputs and the combination in an easily extendible format. An overview of the usage and the available command-line arguments is given below. For the initial setup, run `pip install -r requirements.txt`.
+Combine statistically independent workspaces without writing complicated code. SimpleCombination is based on the pyhf and cabinetry Python packages and allows providing configurations for individual inputs and the combination in an easily extendible format. An overview of the usage and the available command-line arguments is given below. For the initial setup, run `pip install -r requirements.txt` (tested with python3.12).
 
 ```
 usage: combine.py [-h] -a ANALYSIS_NAMES [ANALYSIS_NAMES ...] [-p PARAMETERS [PARAMETERS ...]] [-c COMBINATION_NAME] [-o OUTPUT_DIR] [--output-level OUTPUT_LEVEL] [--ranking] [--fit-comparisons]
