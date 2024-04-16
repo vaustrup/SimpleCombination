@@ -4,14 +4,12 @@ import inspect
 from common.combinationbase import CombinationBase
 from common.workspaces import Workspace
 
-from typing import Optional
-
 from common.misc.logger import logger
 
 
 def get_combination(
-    combination_name: Optional[str] = None,
-) -> Optional[CombinationBase]:
+    combination_name: str | None = None,
+) -> CombinationBase | None:
     """
     Retrieve configuration class for given combination.
 
@@ -51,7 +49,7 @@ def get_combination(
 
 
 def get_analysis_workspace(
-    analysis_name: str, parameters: dict, combination: Optional[CombinationBase]
+    analysis_name: str, parameters: dict, combination: CombinationBase | None
 ) -> Workspace:
     """
     Retrieve analysis workspace modified according to settings

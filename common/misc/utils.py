@@ -1,11 +1,9 @@
 import argparse
 
-from typing import Optional
-
 from common.misc.logger import logger
 
 
-def parse_parameters(parameter_list: Optional[list[str]]) -> dict:
+def parse_parameters(parameter_list: list[str] | None) -> dict:
     """
     Split parameters provided as a list of strings
     representing key-value pairs separated by a equal-sign.

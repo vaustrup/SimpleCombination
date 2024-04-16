@@ -3,22 +3,20 @@ import pathlib
 import cabinetry
 import pyhf
 
-from typing import Optional, Union
-
 import common.plotting.normalisation
 import common.plotting.limits
 
 
 def modifier_grid(
-    model: pyhf.pdf.Model, figure_folder: Union[str, pathlib.Path] = ""
+    model: pyhf.pdf.Model, figure_folder: str | pathlib.Path = ""
 ) -> None:
     cabinetry.visualize.modifier_grid(model=model, figure_folder=figure_folder)
 
 
 def norm_factors(
     fit_results: list[cabinetry.fit.FitResults],
-    figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[list[str]] = None,
+    figure_folder: str | pathlib.Path = "",
+    model_names: list[str] | None = None,
 ) -> None:
     common.plotting.normalisation.norm_factors(
         fit_results=fit_results,
@@ -29,7 +27,7 @@ def norm_factors(
 
 def pull_plot(
     fit_results: cabinetry.fit.FitResults,
-    figure_folder: Union[str, pathlib.Path] = "",
+    figure_folder: str | pathlib.Path = "",
 ) -> None:
     cabinetry.visualize.pulls(
         fit_results=fit_results, figure_folder=figure_folder
@@ -38,7 +36,7 @@ def pull_plot(
 
 def correlation_matrix(
     fit_results: cabinetry.fit.FitResults,
-    figure_folder: Union[str, pathlib.Path] = "",
+    figure_folder: str | pathlib.Path = "",
     pruning_threshold=0.1,
 ) -> None:
     cabinetry.visualize.correlation_matrix(
@@ -50,7 +48,7 @@ def correlation_matrix(
 
 def ranking(
     ranking_results: cabinetry.fit.RankingResults,
-    figure_folder: Union[str, pathlib.Path] = "",
+    figure_folder: str | pathlib.Path = "",
 ) -> None:
     cabinetry.visualize.ranking(
         ranking_results=ranking_results, figure_folder=figure_folder
@@ -59,8 +57,8 @@ def ranking(
 
 def limit_comparison(
     limit_results: list[cabinetry.fit.LimitResults],
-    figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[list[str]] = None,
+    figure_folder: str | pathlib.Path = "",
+    model_names: list[str] | None = None,
 ) -> None:
     common.plotting.limits.limit_comparison(
         limit_results=limit_results,

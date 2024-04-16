@@ -1,8 +1,6 @@
 from abc import ABC
 from dataclasses import dataclass
 
-from typing import Optional
-
 
 @dataclass
 class CombinationBase(ABC):
@@ -18,7 +16,7 @@ class CombinationBase(ABC):
     # Name of the output directory, in which to save all results,
     # can be specified in the child class with
     # outputdir = '/path/to/output/directory'
-    outputdir: Optional[str] = None
+    outputdir: str | None = None
 
     # Name of signal process to use in combined workspaces
     # Signal processes in individual workspaces will be renamed to this

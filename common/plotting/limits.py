@@ -9,13 +9,11 @@ import cabinetry
 
 from common.misc.logger import logger
 
-from typing import Optional, Union
-
 
 def limit_comparison(
     limit_results: list[cabinetry.fit.LimitResults],
-    figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[list[str]] = None,
+    figure_folder: str | pathlib.Path = "",
+    model_names: list[str] | None = None,
 ) -> None:
     num_results = len(limit_results)
     step_size = 2.0

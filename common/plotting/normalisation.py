@@ -5,13 +5,11 @@ import pathlib
 
 import cabinetry
 
-from typing import Optional, Union
-
 
 def norm_factors(
     fit_results: list[cabinetry.fit.FitResults],
-    figure_folder: Union[str, pathlib.Path] = "",
-    model_names: Optional[list[str]] = None,
+    figure_folder: str | pathlib.Path = "",
+    model_names: list[str] | None = None,
 ) -> None:
     factors = []
     for fit_result in fit_results:
